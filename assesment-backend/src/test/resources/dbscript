@@ -1,0 +1,43 @@
+ CREATE TABLE project.parent_task (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  parenttask varchar(45) UNIQUE,
+  PRIMARY KEY (id)
+) 
+
+
+ CREATE TABLE project.project ( id bigint(11) NOT NULL AUTO_INCREMENT,
+  project varchar(45) UNIQUE,
+  start_date datetime DEFAULT NULL,
+  end_date datetime DEFAULT NULL,
+  priority int(11) DEFAULT NULL,
+  PRIMARY KEY (id)
+  ) ;
+
+ 
+ CREATE TABLE project.task ( id bigint(11) NOT NULL AUTO_INCREMENT,
+  parent_id int(11) DEFAULT NULL ,
+  project_id bigint(20) DEFAULT NULL ,
+  task varchar(45) UNIQUE,
+  start_date datetime DEFAULT NULL,
+  end_date datetime DEFAULT NULL,
+  priority int(11) DEFAULT NULL,
+  status boolean default false,
+  PRIMARY KEY (id),
+  FOREIGN KEY(project_id) references project(id),
+  FOREIGN KEY(parent_id) references parent_task(id)
+) ;
+
+
+
+
+
+ CREATE TABLE project.user ( id bigint(11) NOT NULL AUTO_INCREMENT,
+  first_name varchar(100) ,
+  last_name varchar(100) ,
+  employee_id varchar(100) ,
+  project_id bigint(11),
+  task_id bigint(11),
+  PRIMARY KEY (id),
+  FOREIGN KEY(project_id) references project(id),
+   FOREIGN KEY(task_id) references task(id)
+) ;
