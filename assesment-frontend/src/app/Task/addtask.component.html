@@ -1,0 +1,146 @@
+<project-modal #projectModal  (projectModalEvent)="handleSelectedProject($event)"></project-modal>
+<user-modal #userModal  (userModalEvent)="handleSelectedUser($event)"></user-modal>
+<parent-task-modal #parentTaskModal  (parentTaskModalEvent)="handleSelectedParentTask($event)"></parent-task-modal>
+<div class="addtask">
+    <br/>
+    <br/>
+        <h1>Add Task</h1>
+   
+<header-root></header-root>
+
+<div *ngIf="successMessage">
+    <h3 style="color: green; text-align: center;">{{successMessage}}</h3>
+</div>
+<div *ngIf="errorMessage">
+      <h3 style="color: red; text-align: center;">{{errorMessage}}</h3>
+</div>
+<br/>
+        <form #addTask = "ngForm" (ngSubmit) = "onClickSubmit(addTask.value)" ngNativeValidate  class="login-container" >
+                    
+            <div class="form-group row">
+                <div class="col-xs-4">
+                  <label for="ex1">Project : </label>
+                  </div>
+                <div class="col-xs-4">
+                   <input class="form-control" [(ngModel)]="project" id="project"  name="project"  placeholder="Project Name" type="text" required>
+                  
+                </div>
+                <div class="col-xs-4">
+                  
+                  <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#projectModal"   style="width: 50%;">Search</button>
+               </div>
+               
+              </div>
+
+              
+              <div class="form-group row">
+                <div class="col-xs-4">
+                  <label for="ex1">Task : </label>
+                  </div>
+                <div class="col-xs-4">
+                   <input class="form-control" ngModel id="task" name="task" placeholder="Task Name" type="text" required>
+                </div>
+               
+              </div>
+
+              <div class="form-group row">
+                <div class="col-xs-4">
+                  
+                  </div>
+                <div class="col-xs-4">
+                  <input type="checkbox" [(ngModel)]="isParentTask" id="isParentTask" (change)="changeValue(isParentTask)" name="isParentTask" />   Parent Task
+                </div>
+               
+              </div>
+              <div class="form-group row">
+                <div class="col-xs-4">
+                  <label for="ex1">Priority : </label>
+                  </div>
+                <div class="col-xs-4">
+                    <div class="form-group row">
+                         <div class="col-xs-11">
+                            <span class="font-weight-bold indigo-text mr-2 mt-1">0</span>
+                            <input type="range" disabled="{{isParentTask}}"  min="0" ngModel max="30" name="priority" value="{{rangevalue}}" class="slider" (input)="valueChanged($event)" id="priority">
+                            
+                         </div>
+                         <div class="col-xs-0">
+                            <span class="font-weight-bold indigo-text mr-2 mt-1">30</span>
+                         </div>
+                         </div> 
+                  
+                  
+                  
+                  <p style="text-align: center;">{{ isParentTask ? 0 : rangevalue }}</p>
+                </div>
+               
+              </div>
+              <div class="form-group row">
+                <div class="col-xs-4">
+                  <label for="ex1">Parent task : </label>
+                  </div>
+                <div class="col-xs-4">
+                   <input class="form-control"  [(ngModel)]="parentTask" id="parentTask" name="parentTask"  placeholder="Parent Task" type="text" required>
+                </div>
+
+                <div class="col-xs-4">
+                 <div *ngIf="isParentTask">
+                   
+                  <button type="button" class="btn btn-outline-primary" disableddata-toggle="modal" data-target="#parentTaskModal"   style="width: 50%;">Search</button>
+                 </div>
+
+                 <div *ngIf="!isParentTask">
+                    <button type="button" class="btn btn-outline-primary"  data-toggle="modal" data-target="#parentTaskModal"   style="width: 50%;">Search</button>
+                   </div>
+                  
+               </div>
+               
+              </div>
+              <div class="form-group row">
+                <div class="col-xs-4">
+                  <label for="ex1">Start Date : </label>
+                  </div>
+                <div class="col-xs-4">
+                   <input type="date" class="form-control" disabled="{{isParentTask}}"  [(ngModel)]="startDate" id="startDate" value="{{startDate}}" name="startDate" placeholder="Task Start Date (yyyy-MM-dd)"  required>
+                  
+                </div>
+               
+              </div>
+              <div class="form-group row">
+                <div class="col-xs-4">
+                  <label for="ex1">End Date : </label>
+                  </div>
+                <div class="col-xs-4">
+                   <input type="date" class="form-control" disabled="{{isParentTask}}" [(ngModel)]="endDate" id="endDate"   name="endDate" value="{{endDate}}" placeholder="Task End Date (yyyy-MM-dd)"  required>
+                </div>
+               
+              </div>
+              <div class="form-group row">
+                <div class="col-xs-4">
+                  <label for="ex1">User : </label>
+                  </div>
+                <div class="col-xs-4">
+                   <input class="form-control" [(ngModel)]="userName"  id="userName" name="user" placeholder="User Name" type="text" required>
+                   <input class="form-control" [(ngModel)]="userId" id="userId" name="userId" type="hidden" >
+                </div>
+
+                <div class="col-xs-4">
+                  <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#userModal"   style="width: 50%;">Search</button>
+               </div>
+               
+              </div>
+              <div class="form-group row">
+                <div class="col-xs-4">
+                 
+                  </div>
+                <div class="col-xs-4">
+                    <button [disabled]="loading" class="buttonControl" >Add Task</button> &nbsp;
+                    <button [disabled]="loading" type="reset" class="buttonControl" >Reset</button> 
+                </div>
+               
+              </div>
+           
+       </form>
+      
+      </div>
+
+      

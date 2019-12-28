@@ -1,0 +1,145 @@
+<project-modal #projectModal  (projectModalEvent)="handleSelectedProject($event)"></project-modal>
+<user-modal #userModal  (userModalEvent)="handleSelectedUser($event)"></user-modal>
+<parent-task-modal #parentTaskModal  (parentTaskModalEvent)="handleSelectedParentTask($event)"></parent-task-modal>
+
+<div class="searchtask">
+        <h1>Update Task</h1>
+<header-root></header-root>
+<div *ngIf="successMessage">
+    <h3 style="color: green; text-align: center;">{{successMessage}}</h3>
+</div>
+<div *ngIf="errorMessage">
+      <h3 style="color: green; text-align: center;">{{errorMessage}}</h3>
+</div>
+<br/>
+<form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+                  
+
+    <div class="form-group row">
+        <div class="col-xs-4">
+          <label for="ex1">Project : </label>
+          </div>
+        <div class="col-xs-4">
+           <input class="form-control" formControlName="project"  disabled name="project"  placeholder="Project Name" type="text" required>
+          
+        </div>
+        <div class="col-xs-4">
+          
+          <button type="button" disabled class="btn btn-outline-primary" data-toggle="modal" data-target="#projectModal"   style="width: 50%;">Search</button>
+       </div>
+       
+      </div>
+            <div class="form-group row">
+                <div class="col-xs-4">
+                  <label for="ex1">Task : </label>
+                  </div>
+                <div class="col-xs-4">
+                  
+                   <input class="form-control" formControlName="task" id="task" type="text" required>
+                </div>
+               
+              </div>
+              <div class="form-group row">
+                  <div class="col-xs-4">
+                    
+                    </div>
+                  <div class="col-xs-4">
+                    <input type="checkbox" disabled [(ngModel)]="isParentTask" id="isParentTask" (change)="changeValue(isParentTask)" name="isParentTask" />   Parent Task
+                  </div>
+                 
+                </div>
+              <div class="form-group row">
+                <div class="col-xs-4">
+                  <label for="ex1">Priority : </label>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group row">
+                         <div class="col-xs-11">
+                            <span class="font-weight-bold indigo-text mr-2 mt-1">0</span>
+                            <input class="form-control" formControlName="priority" id="priority" type="range"  min="0" max="30" class="slider" (input)="valueChanged($event)" required>
+                            
+                            
+                         </div>
+                         <div class="col-xs-0">
+                            <span class="font-weight-bold indigo-text mr-2 mt-1">30</span>
+                         </div>
+                         </div> 
+                  
+                  
+                         <p style="text-align: center;">{{updateForm.value.priority}}</p>
+                
+                </div>
+               
+              </div>
+              <div class="form-group row">
+                  <div class="col-xs-4">
+                    <label for="ex1">Parent task : </label>
+                    </div>
+                  <div class="col-xs-4">
+                     <input class="form-control"  formControlName="parentTask" id="parentTask" name="parentTask"  placeholder="Parent Task" type="text" required>
+                  </div>
+  
+                  <div class="col-xs-4">
+                   <div *ngIf="isParentTask">
+                     
+                    <button type="button" class="btn btn-outline-primary" disableddata-toggle="modal" data-target="#parentTaskModal"   style="width: 50%;">Search</button>
+                   </div>
+  
+                   <div *ngIf="!isParentTask">
+                      <button type="button" class="btn btn-outline-primary"  data-toggle="modal" data-target="#parentTaskModal"   style="width: 50%;">Search</button>
+                     </div>
+                    
+                 </div>
+                 
+                </div>
+              <div class="form-group row">
+                <div class="col-xs-4">
+                  <label for="ex1">Start Date : </label>
+                  </div>
+                <div class="col-xs-4">
+                  
+                   <input class="form-control"  formControlName="startDate" id="startDate" type="date" required>
+                </div>
+               
+              </div>
+              <div class="form-group row">
+                <div class="col-xs-4">
+                  <label for="ex1">End Date : </label>
+                  </div>
+                <div class="col-xs-4">
+                   
+                   <input class="form-control"  formControlName="endDate" id="endDate" type="date" required>
+                </div>
+               
+              </div>
+
+              <div class="form-group row">
+                  <div class="col-xs-4">
+                    <label for="ex1">User : </label>
+                    </div>
+                  <div class="col-xs-4">
+                     <input class="form-control" disabled formControlName="userName" placeholder="User Name" type="text" required>
+                     <input class="form-control" [(ngModel)]="userId" id="userId" name="userId" type="hidden" >
+                  </div>
+  
+                  <div class="col-xs-4">
+                    <button type="button" disabled class="btn btn-outline-primary" data-toggle="modal" data-target="#userModal"   style="width: 50%;">Search</button>
+                 </div>
+                 
+                </div>
+              <div class="form-group row">
+                <div class="col-xs-4">
+                 
+                  </div>
+                <div class="col-xs-4">
+                    <button [disabled]="loading" class="buttonControl" >Update</button> &nbsp;
+                    <button [disabled]="loading" type="button" (click)="cancelTask()" class="buttonControl" >Cancel</button> 
+                </div>
+               
+              </div>
+           
+       </form>
+      
+      </div>
+
+      

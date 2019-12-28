@@ -1,0 +1,117 @@
+
+<project-modal #projectModal  (projectModalEvent)="handleSelectedProject($event)"></project-modal>
+<div class="searchtask">
+    <br/>
+    <br/>
+        <h1>View Task</h1>
+        <header-root></header-root>
+
+         <div class="form-group row">
+            <div class="col-xs-12">
+              <label for="ex1">Project :  </label> &nbsp;
+              <input [(ngModel)]="project" (keyup)= "searchByProject(project)" placeholder="Search by project.."  id="project" type="text">
+              &nbsp;&nbsp;
+              <button type="button"  data-toggle="modal" data-target="#projectModal" >Search</button>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <label for="ex1">Sort Task By:</label>
+                &nbsp;&nbsp;
+                <button [disabled]="loading" (click) = "sortByStartDate()">Start Date</button>
+                &nbsp;&nbsp; &nbsp;&nbsp;
+                <button [disabled]="loading" type="button"  (click) = "sortByEndDate()" >End Date</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <button [disabled]="loading" type="button" (click)="sortByPriority()"  >Priority</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <button [disabled]="loading" type="button"  (click)="sortByCompleted()">Completed</button>
+            </div>
+
+                   
+           
+          </div>
+          
+          <hr class='dotted' />
+
+          <div *ngIf="successMessage">
+            <h3 style="color: green; text-align: center;">{{successMessage}}</h3>
+        </div>
+        <div *ngIf="errorMessage">
+              <h3 style="color: red; text-align: center;">{{errorMessage}}</h3>
+        </div>
+        <br/>
+        
+          <table class="table table-bordered" style="width: 100%;">
+            <thead>
+              <tr>
+                <th scope="col" colspan="2">Task</th>
+                <th scope="col" colspan="2">Parent</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Priority</th>
+                <th scope="col" colspan="3" style="text-align: center">Action</th>
+                
+              </tr>
+            </thead> 
+           <!--<tbody *ngFor="let task of filteredList | grdFilter:{task : searchTask, parentTask : searchTask};">-->
+             <tbody *ngFor="let task of filteredList">
+              <tr>
+                <td scope="row" colspan="2">{{task.task}}</td>
+                <td scope="row" colspan="2">{{task.parent.parentTask}}</td>
+                <td scope="row">{{task.startDate}}</td>
+                <td scope="row">{{task.endDate}}</td>
+                <td scope="row">{{task.priority}}</td>
+                <td>
+                  <div class="input-group mb-6" *ngIf="task.status">
+                    <button type="button" disabled class="btn btn-primary" (click)="editTask(task.id)">Edit</button>
+                </div>
+                <div class="input-group mb-6" *ngIf="!task.status">
+                  <button type="button" class="btn btn-primary" (click)="editTask(task.id)">Edit</button>
+              </div>
+                </td>
+                <td>
+                  <div class="input-group mb-6" *ngIf="task.status">
+                    <button type="button" disabled class="btn btn-primary" (click)="endTask(task.id)">End Task</button>
+                </div>
+                <div class="input-group mb-6" *ngIf="!task.status">
+                  <button type="button"  class="btn btn-primary" (click)="endTask(task.id)">End Task</button>
+              </div>
+                </td>
+                
+                 </tr>
+             
+            </tbody>
+          </table>
+       <!-- <table>
+            <tr>
+                <td colspan="2">
+                    <label for="username">Task : </label> &nbsp;
+                     <input type="text" ngModel name="userName" id="userName" required />
+                </td>
+                <td colspan="2">
+                    <label for="username">Parent Task : </label> &nbsp;
+                     <input type="text" ngModel name="userName" id="userName" required />
+                </td>
+            </tr>
+            <tr>
+            <td >
+                <label for="username">Priority From : </label> &nbsp;
+                 <input type="text" ngModel name="userName" id="userName" required />
+            </td>
+            <td>
+                <label for="username">Priority To : </label> &nbsp;
+                 <input type="text" ngModel name="userName" id="userName" required />
+            </td>
+            <td>
+                <label for="username">Start Date : </label> &nbsp;
+                 <input type="text" ngModel name="userName" id="userName" required />
+            </td>
+            <td>
+                <label for="username">End Date : </label> &nbsp;
+                 <input type="text" ngModel name="userName" id="userName" required />
+            </td>
+           
+            
+        </tr>
+     </table>-->
+                 
+      </div>
+
+     

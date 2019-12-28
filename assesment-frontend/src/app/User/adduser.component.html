@@ -1,0 +1,134 @@
+<div class="addtask">
+
+    <br/>
+    <br/>
+        <h1>Add User</h1>
+   
+<header-root></header-root>
+
+<div *ngIf="successMessage">
+    <h3 style="color: green; text-align: center;">{{successMessage}}</h3>
+</div>
+<div *ngIf="errorMessage">
+      <h3 style="color: red; text-align: center;">{{errorMessage}}</h3>
+</div>
+<br/>
+        <form #addUser = "ngForm" (ngSubmit) = "onClickAddSubmit(addUser.value)" ngNativeValidate  class="login-container" >
+                    
+            <div class="form-group row">
+                <div class="col-xs-4">
+                  <label for="ex1">First Name : </label>
+                  </div>
+                <div class="col-xs-4">
+                   <input class="form-control" ngModel id="firstName" name="firstName" placeholder="First Name" type="text" required>
+                </div>
+               
+              </div>
+             
+              <div class="form-group row">
+                <div class="col-xs-4">
+                  <label for="ex1">Last Name : </label>
+                  </div>
+                <div class="col-xs-4">
+                   <input class="form-control" ngModel id="lastName" name="lastName" placeholder="Last Name " type="text" required>
+                </div>
+               
+              </div>
+              <div class="form-group row">
+                <div class="col-xs-4">
+                  <label for="ex1">Employee ID : </label>
+                  </div>
+                <div class="col-xs-4">
+                   <input class="form-control" ngModel id="employeeId"  name="employeeId" placeholder="Employee ID" type="text" required>
+                </div>
+               
+              </div>
+             
+              <div class="form-group row">
+                <div class="col-xs-4">
+                 
+                  </div>
+                <div class="col-xs-4">
+                    <button [disabled]="loading" class="buttonControl" >Add </button> &nbsp;
+                    <button [disabled]="loading" type="reset" class="buttonControl" >Reset</button> 
+                </div>
+               
+              </div>
+           
+       </form>
+      
+       <hr class='dotted' />
+       <br/>
+       <div class="form-group row">
+        <div class="col-xs-3">
+          <input class="form-control" [(ngModel)]="searchUser" id="searchUser" (keyup)= "searchText(searchUser)" name="searchUser" placeholder="Search.. " type="text">
+          </div>
+        <div class="col-xs-3">
+          <label for="ex1">Sort:</label>
+          <button [disabled]="loading" (click) = "sortByFirstName()">First Name </button> &nbsp;
+           
+        </div>
+
+        <div class="col-xs-3">
+          <button [disabled]="loading" type="button" (click) = "sortByLastName()" >Last Name</button>
+          
+        </div>
+        <div class="col-xs-3">
+          <button [disabled]="loading" type="button" (click) = "sortByEmployeeId()" >Employee ID</button>
+        </div>
+        
+      </div>
+
+      <form [formGroup]="userForm" (ngSubmit)="onClickSubmit(userForm.value)">
+          <div formArrayName="add">
+            <div *ngFor="let user of this.userForm.controls.add.controls; index as i" [formGroupName]="i">
+     
+     
+          <div class="form-group row" >
+          <div class="col-xs-12">
+              <hr class='dotted' />
+              
+            </div>
+          </div>
+         
+          <div class="form-group row" >
+            <div class="col-xs-4">
+               
+              <label for="ex1">First Name : </label>
+                
+                <input formControlName="firstName" (focusout)="registerIndex(i)" class="form-control" type="text"/>
+              </div>
+
+              <div class="col-xs-4">
+
+                   <button [disabled]="loading"  class="buttonControl" >Edit</button>
+                </div>
+          </div>
+          <div class="form-group row" >
+              <div class="col-xs-4">
+                 <label for="ex1">Last Name : </label>
+                  
+                  <input formControlName="lastName" (focusout)="registerIndex(i)" class="form-control" type="text"/>
+                </div>
+  
+                <div class="col-xs-4">
+                     <button [disabled]="loading" (click)="deleteUser(userForm.value.add[i].id)" type="button" class="buttonControl" >Delete</button>
+                  </div>
+            </div>
+            <div class="form-group row" >
+                <div class="col-xs-4">
+                    <label for="ex1">Employee ID : </label>
+                   
+                    <input formControlName="employeeId"  (focusout)="registerIndex(i)" class="form-control" type="text"/>
+                   
+                  </div>
+    
+                  
+              </div>
+              </div>
+              </div>
+              </form>
+
+     
+    </div>
+

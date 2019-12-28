@@ -1,0 +1,210 @@
+  
+
+<user-modal #userModal  (userModalEvent)="handleSelectedUser($event)"></user-modal>
+<div class="addtask">
+  <br/>
+  <br/>
+        <h1>Add Project</h1>
+   
+<header-root></header-root>
+
+<div *ngIf="successMessage">
+    <h3 style="color: green; text-align: center;">{{successMessage}}</h3>
+</div>
+<div *ngIf="errorMessage">
+      <h3 style="color: red; text-align: center;">{{errorMessage}}</h3>
+</div>
+<br/>
+        <form #addProject = "ngForm" (ngSubmit) = "onClickSubmit(addProject.value)" ngNativeValidate  class="login-container" >
+                    
+            <div class="form-group row">
+                <div class="col-xs-4">
+                  <label for="ex1">Project Name : </label>
+                  </div>
+                <div class="col-xs-4">
+                   <input class="form-control" ngModel id="project" name="project" placeholder="Project Name" type="text" required>
+                </div>
+               
+              </div>
+             
+              <div class="form-group row">
+                <div class="col-xs-4">
+                 
+                  </div>
+                <div class="col-xs-4">
+                    <input type="checkbox" [(ngModel)]="isChecked" (change)="checkValue(isChecked)" name="isChecked" value="Bike"/>Set Start and End Date &nbsp;
+                   <input class="form-control" disabled="{{isChecked ? false : true}}" ngModel id="startDate" name="startDate" value="{{startDate}}"  type="date">
+                   <input type="date" class="form-control" disabled="{{isChecked ? false : true}}" ngModel id="endDate" name="endDate" value="{{endDate}}"  >
+                </div>
+               
+              </div>
+              <div class="form-group row">
+                <div class="col-xs-4">
+                  <label for="ex1">Priority : </label>
+                  </div>
+                <div class="col-xs-4">
+                    <div class="form-group row">
+                         <div class="col-xs-11">
+                            <span class="font-weight-bold indigo-text mr-2 mt-1">0</span>
+                            <input type="range"  min="0"  max="30" ngModel id="priority" name="priority" value="{{rangevalue}}" class="slider" (input)="valueChanged($event)" id="priority">
+                            
+                         </div>
+                         <div class="col-xs-0">
+                            <span class="font-weight-bold indigo-text mr-2 mt-1">30</span>
+                         </div>
+                         </div> 
+                  
+                  
+                  
+                  <p style="text-align: center;">{{ rangevalue }}</p>
+                </div>
+               
+              </div>
+              <div class="form-group row">
+                <div class="col-xs-4">
+                  <label for="ex1">Manager : </label>
+                  </div>
+                <div class="col-xs-4">
+                   <input class="form-control" [(ngModel)]="managerName" id="managerName" name="managerName" placeholder="Manager Name " type="text" >
+                   <input class="form-control" [(ngModel)]="managerId" id="managerId" name="managerId" placeholder="Manager Name " type="hidden" >
+                </div>
+
+                <div class="col-xs-4">
+                  <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#userModal"   style="width: 50%;">Search</button>
+                    </div>
+                 
+  
+               
+               
+              </div>
+             
+              <div class="form-group row">
+                <div class="col-xs-4">
+                 
+                  </div>
+                <div class="col-xs-4">
+                    <button [disabled]="loading" class="buttonControl" >Add </button> &nbsp;
+                    <button [disabled]="loading" type="reset" class="buttonControl" >Reset</button> 
+                </div>
+               
+              </div>
+           
+       </form>
+      
+       <hr class='dotted' />
+       <br/>
+       <div class="form-group row">
+        <div class="col-xs-9">
+             <input class="form-control" [(ngModel)]="searchProject" id="searchProject" (keyup)= "searchText(searchProject)" name="searchText" placeholder="Search.. " type="text">
+          </div>
+       </div>
+       <div class="form-group row">
+        <div class="col-xs-9">
+          <label for="ex1">Sort By:</label>
+          &nbsp;&nbsp;
+          <button [disabled]="loading" (click) = "sortByStartDate()">Start Date</button>
+          &nbsp;&nbsp; &nbsp;&nbsp;
+          <button [disabled]="loading" type="button"  (click) = "sortByEndDate()" >End Date</button>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <button [disabled]="loading" type="button" (click)="sortByPriority()"  >Priority</button>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <button [disabled]="loading" type="button"  (click)="sortByCompleted()">Completed</button>
+        </div>
+
+                
+      </div>
+
+     
+          <form [formGroup]="projectForm" (ngSubmit)="updateProject(projectForm.value)">
+              <div formArrayName="add">
+                <div *ngFor="let project of this.projectForm.controls.add.controls; index as i" [formGroupName]="i">
+         
+          <div class="form-group row" >
+          <div class="col-xs-12">
+              <hr class='dotted' />
+              
+            </div>
+          </div>
+          <div class="form-group row" >
+            <div class="col-xs-4">
+              <label for="ex1">Project : </label>
+              <input formControlName="project" (focusout)="registerIndex(i)" class="form-control" type="text"/>
+               
+                
+              </div>
+
+              <div class="col-xs-4">
+                <div class="form-group row">
+                     <div class="col-xs-11">
+                        <span class="font-weight-bold indigo-text mr-2 mt-1">0</span>
+                        
+                        <input formControlName="priority" (focusout)="registerIndex(i)" class="form-control" type="range"  min="0"  max="30" />
+                                               
+                     </div>
+                     <div class="col-xs-0">
+                        <span class="font-weight-bold indigo-text mr-2 mt-1">30</span>
+                     </div>
+                     </div> 
+                    
+              
+              <p style="text-align: center;">{{ projectForm.value.add[i].priority }}</p>
+            </div>
+
+              
+          </div>
+          <div class="form-group row" >
+              <div class="col-xs-4">
+                 
+                <label for="ex1">No Of Task : </label>
+                  
+                  <input formControlName="noOfTask" disabled class="form-control" type="text"/>
+                </div>
+
+                <div class="col-xs-4">
+                  <label for="ex1">Completed : </label>
+                 
+                  <input formControlName="taskCompleted" disabled class="form-control" type="text"/>
+                </div>
+  
+                <div class="col-xs-4">
+                  <button [disabled]="loading"  class="buttonControl" >Update</button>
+                 
+               </div>
+
+                
+            </div>
+            <div class="form-group row" >
+                <div class="col-xs-4">
+                    <label for="ex1">Start Date : </label>
+                    
+                    <input type="date" formControlName="startDate" (focusout)="registerIndex(i)" class="form-control"/>
+
+                    
+                  </div>
+
+                  <div class="col-xs-4">
+                   
+                      <label for="ex1">End Date : </label>
+                      <input type="date" formControlName="endDate" (focusout)="registerIndex(i)" class="form-control"/>
+                    
+                  </div>
+    
+                  <div class="col-xs-4">
+                    <button [disabled]="loading" (click)="deleteUser(user.id)" type="button" class="buttonControl" >Suspend</button>
+                   
+                 </div>
+                  
+              </div>
+              
+
+             </div>
+
+
+      </div>
+     </form>
+
+     
+    </div>
+ 
+
+      

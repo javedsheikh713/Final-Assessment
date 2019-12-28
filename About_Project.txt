@@ -1,0 +1,63 @@
+Summary for Capsual project :
+
+ Tools used for this project:
+ 
+ -> Spring Tool Suit Version: 3.9.10.RELEASE
+ -> JDK 1.8
+ -> My SQL DB Server
+ -> My SQL Workbench
+ -> Node JS for UI deployement
+ -> Visual Studio for Angular code
+ -> Post Man for Unit testing.
+ -> Notepad++
+ -> GIT HUB
+ -> Docker
+ -> Jenkins
+ -> Maven
+ -> Tomcat
+ -> Jmeter
+ -> Emma Code Coverage tool
+ 
+ Technologies USED :
+ -> JAVA language
+ -> Spring BOOT
+ -> Angular
+ -> HTML5
+ -> CSS
+ -> JAVA Script
+ -> BootStrap
+ -> logging
+ -> Rest API
+ 
+ How to Run UI.
+ 
+ Download UI code from https://github.com/javedsheikh713/Capsuals-assignments.git/capsual-assignment_UI
+ 
+ Run ng serve --open command on Node.js command prompt for a dev server. Navigate to http://localhost:4200/. and display task list.
+ 
+ Backend :
+ 
+  Download Backend code from https://github.com/javedsheikh713/Final-Assessment.git/assesment-backend
+  
+  -> After download beckend code . please modify application.properties file with correct db url and credential.
+  -> copy db scripts from /src/test/resource/dbscript.txt and run on SQL server to create a table.
+  -> create a jar file using mvn command. mvn clean install -DSkipTest=true
+  -> run jar file using command java -jar <jar file name>
+  -> REST services for ptoject manager will be available on 8080 port.
+  
+  REST Service URL :
+    
+	  http://localhost:8080/addtask      (POST Service to add task with Task object)
+	  http://localhost:8080/updatetask   (POST Service to update task with Task object)
+	  http://localhost:8080/getalltask   (GET Service to fetch all tasks)
+	  http://localhost:8080/searchbyid   (GET Service to fetch single record by id)
+	  http://localhost:8080/endtask      (GET Service to end task )
+	  http://localhost:8080/adduser      (POST Service to add user with User object)
+	  http://localhost:8080/updateuser   (POST Service to update user with User object)
+	  http://localhost:8080/addproject   (POST Service to add project with Project object)
+	  http://localhost:8080/updatetask   (POST Service to add project with Project object)
+	  http://localhost:8080/addparenttask(POST Service to add parent with ParentTask object)
+	  http://localhost:8080/getalluser 		(GET Service to Fetch all users)
+	   http://localhost:8080/getallproject		(GET Service to Fetch all project)
+ 
+ 
