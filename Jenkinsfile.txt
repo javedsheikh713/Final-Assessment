@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+        tools { 
+            maven 'Maven 3.6.2' 
+            jdk 'JDK 1.8.0_221' 
+        }
+        stages {
+            stage ('checkout') {
+                steps {
+                    echo 'Checking out the code from Github'
+                    checkout([$class: 'GitSCM', 
+                              branches: [[name: '*/master']], 
+                              doGenerateSubmoduleConfigurations: false, 
+                              extensions: [], 
+                              submoduleCfg: [], 
+                              userRemoteConfigs: [[credentialsId: 'javed.sheikh713@gmail.com', 
+                                                   url: 'https://github.com/javedsheikh713/Final-Assessment.git']]]
+                            )
+                }
+            }
+            stage ('build') {
+                steps {
+                    echo 'Building artefact'
+                    bat 'cd assesment-backend & mvn clean install'
+                }
+            }
+            stage ('test') {
+                parallel {
+                    stage ('unit test') {
+                        steps {
+                            echo 'Running Unit Tests'
+                        }
+                    }
+                    stage ('integration test') {
+                        steps {
+                            echo 'Running Integration Tests'
+                        }
+                    }
+                }
+            }
+        }
+}
