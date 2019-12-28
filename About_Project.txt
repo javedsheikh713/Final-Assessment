@@ -31,7 +31,7 @@ Summary for Capsual project :
  
  How to Run UI.
  
- Download UI code from https://github.com/javedsheikh713/Capsuals-assignments.git/capsual-assignment_UI
+ Download UI code from https://github.com/javedsheikh713/Final-Assessment.git/assesment-frontend
  
  Run ng serve --open command on Node.js command prompt for a dev server. Navigate to http://localhost:4200/. and display task list.
  
